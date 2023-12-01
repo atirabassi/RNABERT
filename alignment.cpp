@@ -381,7 +381,7 @@ static PyObject* py_list(PyObject* self, PyObject* args)
     string B = seq2;
 
     // Check list
-    if PyList_Check(c_list){
+    if (PyList_Check(c_list)){
         // get length of the list
         n = PyList_Size(c_list);
     }else{
@@ -389,7 +389,7 @@ static PyObject* py_list(PyObject* self, PyObject* args)
     }
 
     // Check list
-    if PyList_Check(d_list){
+    if (PyList_Check(d_list)){
         // get length of the list
         n = PyList_Size(d_list);
     }else{
@@ -397,7 +397,7 @@ static PyObject* py_list(PyObject* self, PyObject* args)
     }
 
     // Check list
-    if PyList_Check(e_list){
+    if (PyList_Check(e_list)){
         // get length of the list
         n = PyList_Size(e_list);
     }else{
