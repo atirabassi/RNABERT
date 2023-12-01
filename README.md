@@ -8,7 +8,10 @@ In this package, we provides resources including: source codes of the RNABERT mo
 Our code is written with python Python 3.6.5. Our code requires PyTorch version >= 1.4.0, biopython version >=1.76, and C++17 compatible compiler. Please follow the instructions here: https://github.com/pytorch/pytorch#installation.
 Also, please make sure you have at least one NVIDIA GPU. 
 
-#### 1.1 Install the package and other requirements
+#### 1.1a (atirabassi)
+You can create a conda env using the .yml file in the conda repository and then proceed with the next step
+
+#### 1.1b Install the package and other requirements
 
 (Required)
 
@@ -17,7 +20,7 @@ git clone https://github.com//RNABERT
 cd RNABERT
 python setup.py install
 ```
-#### 1.1 b (atirabassi)
+#### 1.1 (atirabassi)
 You can create a conda env using the .yml file in the conda repository
 
 ## 2. Pre-train (Skip this section if you only want to make predictions)
