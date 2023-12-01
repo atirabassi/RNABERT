@@ -19,7 +19,7 @@ from sklearn.metrics import normalized_mutual_info_score, adjusted_rand_score, c
 import torch.nn.functional as F
 from sklearn.cluster import MiniBatchKMeans, KMeans, AgglomerativeClustering, SpectralClustering 
 import itertools  
-
+import h5py
 import alignment_C as Aln_C
 
 random.seed(10)
@@ -161,14 +161,31 @@ class TRAIN:
             data, label, seq_len= batch
             inputs = data.to(self.device)
             prediction_scores, prediction_scores_ss, encoded_layers =  model(inputs)
-            encoding.append(encoded_layers.cpu().detach().numpy())
-        encoding = np.concatenate(encoding, 0)
+            encoding.append(encoded_layers.cpu().detach())
+        encoding = torch.cat(encoding, 0)
 
         embedding = []
         for e, seq in zip(encoding, seqs):
-            embedding.append(e[:len(seq)].tolist())
+            embedding.append(e[:len(seq)])
 
         return embedding 
+
+    def make_np_feature(self, model, dataloader, seqs):
+        model.eval()
+        torch.backends.cudnn.benchmark = True
+        batch_size = dataloader.batch_size
+        encoding = []
+        for batch in dataloader:
+            data, label, seq_len= batch
+            inputs = data.to(self.device)
+            prediction_scores, prediction_scores_ss, encoded_layers =  model(inputs)
+            encoding.append(encoded_layers.cpu().detach().numpy())
+        encoding = np.concatenate(encoding, axis=0)
+
+        embedding = []
+        for e, seq in zip(encoding, seqs):
+            embedding.append(e[:len(seq)])
+        return embedding
 
     def validateOnCompleteTestData(self, test_loader, simirality_matrix):
         # accuracy and rand index
@@ -308,9 +325,16 @@ if args.data_showbase:
     show_base_PCA(features, label.reshape(-1), SS)
 
 if args.data_embedding:
-    seqs, label, test_dl  = data.load_data_EMB(args.data_embedding) 
-    features = train.make_feature(model, test_dl, seqs)
-    for i, data_set in enumerate(args.embedding_output):
-        with open(data_set, 'w') as f:
-            for d in features:
-                f.write(str(d) + '\n')
+    seqs, labels, test_dl  = data.load_data_EMB(args.data_embedding) 
+   # features = train.make_feature(model, test_dl, seqs)
+   # torch.save(features, args.embedding_output[0])
+    embedding = train.make_np_feature(model, test_dl, seqs)
+     
+
+    label=SeqIO.parse(args.data_embedding[0], "fasta")
+
+    with h5py.File(args.embedding_output[0], 'w') as hf:
+        for i, (embed,lab) in enumerate(zip(embedding,label)):
+            grp = hf.create_group(lab.id)
+            grp.create_dataset('embedding', data=embed)
+            #grp.create_dataset('label', data=record.id)
