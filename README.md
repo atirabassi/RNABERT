@@ -9,7 +9,7 @@ Our code is written with python Python 3.6.5. Our code requires PyTorch version 
 Also, please make sure you have at least one NVIDIA GPU. 
 
 #### 1.1a (atirabassi)
-You can create a conda env using the .yml file in the conda repository and then proceed with the next step
+You can create a conda env using the .yml file in the conda repository and then proceed with the next steps
 
 #### 1.1b Install the package and other requirements
 
