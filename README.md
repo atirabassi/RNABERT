@@ -102,3 +102,4 @@ python MLM_SFP.py
     --embedding_output ${OUTPUT_FILE} \
     --batch 40 \
 ```
+You can find a python script to open and read the file in the embedding read output file
