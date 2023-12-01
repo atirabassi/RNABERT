@@ -16,7 +16,7 @@ You can create a conda env using the .yml file in the conda repository and then 
 (Required)
 
 ```
-git clone https://github.com//RNABERT
+git clone https://github.com/atirabassi/RNABERT.git
 cd RNABERT
 python setup.py install
 ```
