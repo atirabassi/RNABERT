@@ -149,4 +149,4 @@ dependencies:
       - torch-spline-conv==1.2.2+pt20cu117
       - tqdm==4.66.1
       - zipp==3.17.0
-prefix: /home/icb/adreina.tirabassi/mambaforge/envs/RNAbert
+
