@@ -17,7 +17,8 @@ git clone https://github.com//RNABERT
 cd RNABERT
 python setup.py install
 ```
-
+#### 1.1 b (atirabassi)
+You can create a conda env using the .yml file in the conda repository
 
 ## 2. Pre-train (Skip this section if you only want to make predictions)
 
@@ -85,11 +86,13 @@ python MLM_SFP.py
     --show_aln
 ```
 
-## 3. Earn embeddings
+## 3. Earn embeddings (atirabassi)
 
-To obtain the embedding vector for the RNA sequence, run 
+To obtain the embedding vector for the RNA sequence, run:
+(the embedding will be a hdf5 file, so you maybe want to add the extetion to the filename)
 
 ```
+export OUTPUT=/path/FILENAME.hdf5
 python MLM_SFP.py 
     --pretraining ${PRE_WEIGHT} \
     --data_embedding ${PRED_FILE} \
